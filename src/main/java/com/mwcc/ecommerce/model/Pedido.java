@@ -25,7 +25,7 @@ public class Pedido {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itensPedido;
 
     @Column(name = "data_pedido")
