@@ -1,10 +1,7 @@
 package com.mwcc.ecommerce.relacionamentos;
 
 import com.mwcc.ecommerce.EntityManagerTest;
-import com.mwcc.ecommerce.model.Cliente;
-import com.mwcc.ecommerce.model.ItemPedido;
-import com.mwcc.ecommerce.model.Pedido;
-import com.mwcc.ecommerce.model.StatusPedido;
+import com.mwcc.ecommerce.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -41,11 +38,12 @@ public class RelacionamentoManyToOneTest extends EntityManagerTest {
     public void VerificarRelacionemtoItemPedidoEPedido(){
         Cliente cliente = entityManager.find(Cliente.class, 2);
         Pedido pedido = entityManager.find(Pedido.class, 2);
+        Produto produto = entityManager.find(Produto.class, 1);
 
         ItemPedido itemPedido = new ItemPedido();
         itemPedido = ItemPedido.builder()
                 .pedido(pedido)
-                .produtoId(1)
+                .produto(produto)
                 .precoProduto(BigDecimal.valueOf(19.98))
                 .quantidade(2)
                 .build();
@@ -58,6 +56,7 @@ public class RelacionamentoManyToOneTest extends EntityManagerTest {
 
         ItemPedido itemPedidoVirificacao = entityManager.find(ItemPedido.class, itemPedido.getId());
         Assert.assertNotNull(itemPedidoVirificacao.getPedido());
+        Assert.assertNotNull(itemPedidoVirificacao.getProduto());
     }
 
 }
