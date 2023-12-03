@@ -17,10 +17,12 @@ import java.time.LocalDateTime;
 public class Pedido {
 
     @Id @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "cliente_id")
-    private Integer clienteId;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
