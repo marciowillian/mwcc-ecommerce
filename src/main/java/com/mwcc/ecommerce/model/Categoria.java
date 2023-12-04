@@ -1,13 +1,15 @@
 package com.mwcc.ecommerce.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Builder
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "categoria")
@@ -18,7 +20,11 @@ public class Categoria {
     private Integer id;
 
     private String nome;
+    @ManyToOne
+    @JoinColumn(name = "categoria_pai_id")
+    private Categoria categoriaPai;
 
-    @Column(name = "categoria_pai_id")
-    private Integer categoriaPaiId;
+    @OneToMany(mappedBy = "categoriaPai")
+    private List<Categoria> categorias;
+
 }
