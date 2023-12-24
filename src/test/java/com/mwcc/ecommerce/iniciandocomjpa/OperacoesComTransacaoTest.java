@@ -75,7 +75,6 @@ public class OperacoesComTransacaoTest extends EntityManagerTest {
     @Test
     public void inserirOPrimeiroObjeto(){
         Produto produto = new Produto();
-        produto.setId(2);
         produto.setNome("Câmero Canon");
         produto.setDescricao("A melhor definição para suas fotos");
         produto.setPreco(new BigDecimal(5000));
@@ -83,7 +82,6 @@ public class OperacoesComTransacaoTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(produto);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Produto produtoVerificacao = entityManager.find(Produto.class, produto.getId());
@@ -92,16 +90,7 @@ public class OperacoesComTransacaoTest extends EntityManagerTest {
 
     @Test
     public void abrirEFecharTrasacao(){
-//        Produto produto = new Produto();
-
         entityManager.getTransaction().begin();
-
-//        entityManager.persist(produto);
-//        entityManager.merge(produto);
-//        entityManager.remove(produto);
-
         entityManager.getTransaction().commit();
-
-
     }
 }

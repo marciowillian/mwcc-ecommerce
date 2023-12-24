@@ -11,42 +11,40 @@ public class CRUDClientTest extends EntityManagerTest {
     @Test
     public void cadastrarCliente(){
 
-        Cliente cliente = new Cliente();
-        cliente.setId(1);
-        cliente.setNome("Marcio Willian");
+        Cliente cliente = Cliente.builder()
+                .nome("Antonieta da Silva")
+                .sexo(SexoCliente.FEMININO)
+                .build();
 
         entityManager.getTransaction().begin();
         entityManager.persist(cliente);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
-        Cliente clienteVerificacao = entityManager.find(Cliente.class, 1);
+        Cliente clienteVerificacao = entityManager.find(Cliente.class, cliente.getId());
         Assert.assertNotNull(clienteVerificacao);
     }
 
     @Test
     public void deveCadastrarClienteComSexoPreenchido(){
-        Cliente cliente = new Cliente();
-        cliente.setId(4);
-        cliente.setNome("Joao Pedro");
-        cliente.setSexo(SexoCliente.MASCULINO);
+        Cliente cliente = Cliente.builder()
+                .nome("Joao Pedro da Silva")
+                .sexo(SexoCliente.MASCULINO)
+                .build();
 
         entityManager.getTransaction().begin();
         entityManager.persist(cliente);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
-        Cliente clienteVerificacao = entityManager.find(Cliente.class, 4);
-
-        Assert.assertEquals(cliente.getNome(), clienteVerificacao.getNome());
+        Cliente clienteVerificacao = entityManager.find(Cliente.class, cliente.getId());
+        Assert.assertEquals(cliente.getSexo(), clienteVerificacao.getSexo());
+        Assert.assertNotNull(cliente.getSexo());
     }
 
     @Test
     public void bucarCLiente(){
         Cliente cliente = entityManager.find(Cliente.class, 2);
-
         Assert.assertNotNull(cliente);
     }
 
@@ -54,15 +52,16 @@ public class CRUDClientTest extends EntityManagerTest {
     public void atualizarCliente(){
         Cliente cliente = entityManager.find(Cliente.class, 2);
         cliente.setNome("Nitia Cristina Chaves Cardoso");
+        cliente.setSexo(SexoCliente.FEMININO);
 
         entityManager.getTransaction().begin();
         entityManager.merge(cliente);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
-        Cliente clienteVerificacao = entityManager.find(Cliente.class, 2);
+        Cliente clienteVerificacao = entityManager.find(Cliente.class, cliente.getId());
         Assert.assertEquals(cliente.getNome(), clienteVerificacao.getNome());
+        Assert.assertNotNull(cliente.getSexo());
     }
 
     @Test

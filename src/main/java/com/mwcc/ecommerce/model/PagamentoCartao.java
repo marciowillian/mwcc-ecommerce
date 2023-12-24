@@ -1,23 +1,26 @@
 package com.mwcc.ecommerce.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "pagamento_cartao")
 public class PagamentoCartao {
 
     @Id @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "pedido_id")
-    private Integer pedidoId;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
 
     @Enumerated(EnumType.STRING)
     private StatusPagamento status;

@@ -1,27 +1,27 @@
 package com.mwcc.ecommerce.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "nota_fiscal")
 public class NotaFiscal {
 
     @Id @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "pedido_id")
-    private Integer pedidoId;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
 
     private String xml;
 

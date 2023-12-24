@@ -6,13 +6,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
-public class RelacionamentoOneToManyTest extends EntityManagerTest {
+public class RelacionamentoOneToOneTest extends EntityManagerTest {
 
     @Test
-    public void verificarRelacionamento(){
-        Produto produto = entityManager.find(Produto.class, 1);
+    public void verificarRelacionamentoPagamentoCartao(){
         Pedido pedido = Pedido.builder()
                 .cliente(entityManager.find(Cliente.class, 2))
                 .build();
@@ -22,50 +23,53 @@ public class RelacionamentoOneToManyTest extends EntityManagerTest {
         entityManager.getTransaction().commit();
         entityManager.clear();
 
-        ItemPedido itemPedido = ItemPedido.builder()
+        PagamentoCartao pagamentoCartao = PagamentoCartao.builder()
+                .numero("1234")
+                .status(StatusPagamento.PROCESSANDO)
                 .pedido(pedido)
-                .produto(produto)
-                .precoProduto(BigDecimal.valueOf(9.98))
-                .quantidade(2)
                 .build();
 
         entityManager.getTransaction().begin();
-        entityManager.persist(itemPedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
-        Produto produtoVerificacao = entityManager.find(Produto.class, produto.getId());
-        Assert.assertNotNull(produtoVerificacao.getItensPedido());
-
-    }
-
-    @Test
-    public void testarRelacionamentoRetornoPedido(){
-        Produto produto = entityManager.find(Produto.class, 1);
-
-        Pedido pedido = Pedido.builder()
-                .cliente(entityManager.find(Cliente.class, 2))
-                .build();
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
-        ItemPedido itemPedido = ItemPedido.builder()
-                .pedido(pedido)
-                .produto(produto)
-                .precoProduto(BigDecimal.valueOf(9.98))
-                .quantidade(2)
-                .build();
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(itemPedido);
+        entityManager.persist(pagamentoCartao);
         entityManager.getTransaction().commit();
         entityManager.clear();
 
         Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());
-        Assert.assertFalse(pedidoVerificacao.getItensPedido().isEmpty());
+        Assert.assertNotNull(pedidoVerificacao.getPagamento());
+    }
+
+    @Test
+    public void verificarRelacionamentoNotaFiscal(){
+        Cliente cliente = entityManager.find(Cliente.class, 2);
+
+        Pedido pedido = Pedido.builder()
+                .cliente(cliente)
+                .build();
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(pedido);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
+        NotaFiscal notaFiscal = NotaFiscal.builder()
+                .pedido(pedido)
+                .xml("123456789012342312SP55001000000001111")
+                .dataEmissao(new Date())
+                .build();
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(notaFiscal);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
+        NotaFiscal notaVerificacao = entityManager.find(NotaFiscal.class, notaFiscal.getId());
+
+        Assert.assertNotNull(notaVerificacao.getPedido());
+    }
+
+    @Test
+    public void verificarBuscaInner(){
+        Pedido pedido = entityManager.find(Pedido.class, 2);
     }
 
 }

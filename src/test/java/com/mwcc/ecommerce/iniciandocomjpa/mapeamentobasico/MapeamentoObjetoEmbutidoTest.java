@@ -1,10 +1,8 @@
 package com.mwcc.ecommerce.iniciandocomjpa.mapeamentobasico;
 
 import com.mwcc.ecommerce.EntityManagerTest;
-import com.mwcc.ecommerce.model.EnderecoEntregaPedido;
-import com.mwcc.ecommerce.model.Pedido;
+import com.mwcc.ecommerce.model.*;
 
-import com.mwcc.ecommerce.model.StatusPedido;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,8 +22,18 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
                 .estado("MA")
                 .build();
 
+        Cliente cliente = Cliente.builder()
+                .nome("Marcio Willian")
+                .sexo(SexoCliente.MASCULINO)
+                .build();
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(cliente);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
         Pedido pedido = Pedido.builder()
-                .id(1)
+                .cliente(cliente)
                 .dataPedido(LocalDateTime.now())
                 .status(StatusPedido.AGUARDANDO)
                 .total(BigDecimal.valueOf(785.10))
@@ -38,7 +46,7 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
         entityManager.clear();
 
-        Pedido pedidoVerificacao = entityManager.find(Pedido.class,1);
+        Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());
         Assert.assertNotNull(pedidoVerificacao);
         Assert.assertNotNull(pedidoVerificacao.getEnderecoEntrega());
         Assert.assertNotNull(pedidoVerificacao.getEnderecoEntrega().getCep());
@@ -46,14 +54,26 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
     @Test
     public void deveExcluirPedido(){
-        Pedido pedido = entityManager.find(Pedido.class, 2);
+        Pedido pedido = Pedido.builder()
+                .cliente(entityManager.find(Cliente.class, 2))
+                .status(StatusPedido.PAGO)
+                .build();
 
         entityManager.getTransaction().begin();
-        entityManager.remove(pedido);
+        entityManager.persist(pedido);
         entityManager.getTransaction().commit();
+        entityManager.clear();
 
-        Pedido pedidoVerificacao = entityManager.find(Pedido.class, 2);
-        Assert.assertNull(pedidoVerificacao);
+        Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());
+        Assert.assertNotNull(pedidoVerificacao);
+
+        entityManager.getTransaction().begin();
+        entityManager.remove(pedidoVerificacao);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
+        Pedido pedidoVerificacaoEclusao = entityManager.find(Pedido.class, pedido.getId());
+        Assert.assertNull(pedidoVerificacaoEclusao);
     }
 
 

@@ -21,7 +21,7 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
@@ -39,6 +39,12 @@ public class Pedido {
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
+
+    @OneToOne(mappedBy = "pedido")
+    private PagamentoCartao pagamento;
+
+    @OneToOne(mappedBy = "pedido")
+    private NotaFiscal notaFiscal;
 
     private BigDecimal total;
 
