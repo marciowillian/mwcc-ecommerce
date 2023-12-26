@@ -8,14 +8,32 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 
 public class RelacionamentoOneToOneTest extends EntityManagerTest {
 
     @Test
     public void verificarRelacionamentoPagamentoCartao(){
+        ItemPedido itemPedido1 = ItemPedido.builder()
+                .produto(Produto.builder()
+                        .nome("Celular Lenovo")
+                        .preco(BigDecimal.valueOf(2500.97))
+                        .build())
+                .precoProduto(BigDecimal.valueOf(2500.97))
+                .build();
+
+        ItemPedido itemPedido2 = ItemPedido.builder()
+                .produto(Produto.builder()
+                        .nome("Notebook Acer Nitro 5")
+                        .preco(BigDecimal.valueOf(4750.90))
+                        .build())
+                .precoProduto(BigDecimal.valueOf(4750.90))
+                .build();
+
         Pedido pedido = Pedido.builder()
                 .cliente(entityManager.find(Cliente.class, 2))
+                .itensPedido(Arrays.asList(itemPedido1, itemPedido2))
                 .build();
 
         entityManager.getTransaction().begin();

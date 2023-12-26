@@ -50,4 +50,23 @@ public class Pedido {
 
     @Embedded
     private EnderecoEntregaPedido enderecoEntrega;
+
+    public void calcularTotal(){
+        if(itensPedido != null) {
+            total = itensPedido.stream().map(ItemPedido::getPrecoProduto)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+    }
+
+    @PrePersist
+    public void aoPersistir() {
+        calcularTotal();
+        System.out.println("Calculo de valor total dos itens do pedido ao salvar. Valor total: " + total );
+    }
+
+    @PreUpdate
+    public void aoAtualizar() {
+        calcularTotal();
+        System.out.println("Calculo de valor total dos itens do pedido ao atualizar. Valor total: " + total);
+    }
 }
