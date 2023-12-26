@@ -1,5 +1,6 @@
 package com.mwcc.ecommerce.model;
 
+import com.mwcc.ecommerce.listener.GerarNotaFiscalListener;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners({ GerarNotaFiscalListener.class })
 @Entity
 @ToString
 @Data
@@ -50,6 +52,10 @@ public class Pedido {
 
     @Embedded
     private EnderecoEntregaPedido enderecoEntrega;
+
+    public boolean isPago() {
+        return StatusPedido.PAGO.equals(status);
+    }
 
     public void calcularTotal(){
         if(itensPedido != null) {

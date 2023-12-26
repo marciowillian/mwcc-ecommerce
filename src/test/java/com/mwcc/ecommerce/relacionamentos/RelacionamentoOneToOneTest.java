@@ -34,6 +34,7 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
         Pedido pedido = Pedido.builder()
                 .cliente(entityManager.find(Cliente.class, 2))
                 .itensPedido(Arrays.asList(itemPedido1, itemPedido2))
+                .status(StatusPedido.AGUARDANDO)
                 .build();
 
         entityManager.getTransaction().begin();
@@ -47,7 +48,11 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
                 .pedido(pedido)
                 .build();
 
+        pedido = entityManager.find(Pedido.class, pedido.getId());
+        pedido.setStatus(StatusPedido.PAGO);
+
         entityManager.getTransaction().begin();
+        entityManager.merge(pedido);
         entityManager.persist(pagamentoCartao);
         entityManager.getTransaction().commit();
         entityManager.clear();
