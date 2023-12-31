@@ -34,7 +34,7 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
         Pedido pedido = Pedido.builder()
                 .cliente(cliente)
-                .dataPedido(LocalDateTime.now())
+                .dataCriacao(LocalDateTime.now())
                 .status(StatusPedido.AGUARDANDO)
                 .total(BigDecimal.valueOf(785.10))
                 .enderecoEntrega(endereco)
