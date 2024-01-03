@@ -1,13 +1,20 @@
-package com.mwcc.ecommerce.geradornota;
+package com.mwcc.ecommerce.notafiscal;
 
+import com.mwcc.ecommerce.EntityManagerTest;
+import com.mwcc.ecommerce.model.Cliente;
+import com.mwcc.ecommerce.model.NotaFiscal;
+import com.mwcc.ecommerce.model.Pedido;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-public class GeradorNotaFiscalTest {
+public class GeradorNotaFiscalTest extends EntityManagerTest {
 
     @Test
     public void gerarNota (){
@@ -43,6 +50,33 @@ public class GeradorNotaFiscalTest {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Test
+    public void deveSalvarNotaFiscal(){
+        Pedido pedido = Pedido.builder()
+                .cliente(entityManager.find(Cliente.class, 2))
+                .build();
+
+        Pedido pedido2 = Pedido.builder()
+                .cliente(entityManager.find(Cliente.class, 2))
+                .build();
+
+        NotaFiscal notaFiscal = NotaFiscal.builder()
+                .pedido(pedido2)
+                .dataEmissao(new Date())
+                .build();
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(pedido);
+        entityManager.persist(pedido2);
+        entityManager.persist(notaFiscal);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
+        NotaFiscal notaFiscalVerificacao = entityManager.find(NotaFiscal.class, notaFiscal.getId());
+
+        Assert.assertNotNull(notaFiscalVerificacao);
     }
 
 }
