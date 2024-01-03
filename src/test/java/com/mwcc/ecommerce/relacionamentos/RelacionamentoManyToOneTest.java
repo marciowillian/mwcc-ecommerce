@@ -42,14 +42,10 @@ public class RelacionamentoManyToOneTest extends EntityManagerTest {
                 .cliente(cliente)
                 .build();
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
         Produto produto = entityManager.find(Produto.class, 1);
 
         ItemPedido itemPedido = ItemPedido.builder()
+                    .id(new ItemPedidoId())
                     .pedido(pedido)
                     .produto(produto)
                     .precoProduto(BigDecimal.valueOf(19.98))
@@ -57,6 +53,7 @@ public class RelacionamentoManyToOneTest extends EntityManagerTest {
                 .build();
 
         entityManager.getTransaction().begin();
+        entityManager.persist(pedido);
         entityManager.persist(itemPedido);
         entityManager.getTransaction().commit();
         entityManager.clear();

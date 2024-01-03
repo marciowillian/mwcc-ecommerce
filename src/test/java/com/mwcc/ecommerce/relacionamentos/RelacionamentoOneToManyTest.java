@@ -17,12 +17,8 @@ public class RelacionamentoOneToManyTest extends EntityManagerTest {
                 .cliente(entityManager.find(Cliente.class, 2))
                 .build();
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
         ItemPedido itemPedido = ItemPedido.builder()
+                .id(new ItemPedidoId())
                 .pedido(pedido)
                 .produto(produto)
                 .precoProduto(BigDecimal.valueOf(9.98))
@@ -30,6 +26,7 @@ public class RelacionamentoOneToManyTest extends EntityManagerTest {
                 .build();
 
         entityManager.getTransaction().begin();
+        entityManager.persist(pedido);
         entityManager.persist(itemPedido);
         entityManager.getTransaction().commit();
         entityManager.clear();
@@ -47,12 +44,8 @@ public class RelacionamentoOneToManyTest extends EntityManagerTest {
                 .cliente(entityManager.find(Cliente.class, 2))
                 .build();
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
         ItemPedido itemPedido = ItemPedido.builder()
+                .id(new ItemPedidoId())
                 .pedido(pedido)
                 .produto(produto)
                 .precoProduto(BigDecimal.valueOf(9.98))
@@ -60,6 +53,7 @@ public class RelacionamentoOneToManyTest extends EntityManagerTest {
                 .build();
 
         entityManager.getTransaction().begin();
+        entityManager.persist(pedido);
         entityManager.persist(itemPedido);
         entityManager.getTransaction().commit();
         entityManager.clear();

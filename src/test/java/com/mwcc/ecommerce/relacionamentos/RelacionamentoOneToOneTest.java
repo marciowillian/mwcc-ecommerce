@@ -37,23 +37,23 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
                 .status(StatusPedido.AGUARDANDO)
                 .build();
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
         PagamentoCartao pagamentoCartao = PagamentoCartao.builder()
                 .numero("1234")
                 .status(StatusPagamento.PROCESSANDO)
                 .pedido(pedido)
                 .build();
 
+        entityManager.getTransaction().begin();
+        entityManager.persist(pedido);
+        entityManager.persist(pagamentoCartao);
+        entityManager.getTransaction().commit();
+        entityManager.clear();
+
         pedido = entityManager.find(Pedido.class, pedido.getId());
         pedido.setStatus(StatusPedido.PAGO);
 
         entityManager.getTransaction().begin();
         entityManager.merge(pedido);
-        entityManager.persist(pagamentoCartao);
         entityManager.getTransaction().commit();
         entityManager.clear();
 
@@ -69,11 +69,6 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
                 .cliente(cliente)
                 .build();
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
         NotaFiscal notaFiscal = NotaFiscal.builder()
                 .pedido(pedido)
                 .xml("123456789012342312SP55001000000001111")
@@ -81,6 +76,7 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
                 .build();
 
         entityManager.getTransaction().begin();
+        entityManager.persist(pedido);
         entityManager.persist(notaFiscal);
         entityManager.getTransaction().commit();
         entityManager.clear();
