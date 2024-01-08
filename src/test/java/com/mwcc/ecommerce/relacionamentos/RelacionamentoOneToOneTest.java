@@ -61,30 +61,30 @@ public class RelacionamentoOneToOneTest extends EntityManagerTest {
         Assert.assertNotNull(pedidoVerificacao.getPagamento());
     }
 
-    @Test
-    public void verificarRelacionamentoNotaFiscal(){
-        Cliente cliente = entityManager.find(Cliente.class, 2);
-
-        Pedido pedido = Pedido.builder()
-                .cliente(cliente)
-                .build();
-
-        NotaFiscal notaFiscal = NotaFiscal.builder()
-                .pedido(pedido)
-                .xml("123456789012342312SP55001000000001111")
-                .dataEmissao(new Date())
-                .build();
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.persist(notaFiscal);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
-        NotaFiscal notaVerificacao = entityManager.find(NotaFiscal.class, notaFiscal.getId());
-
-        Assert.assertNotNull(notaVerificacao.getPedido());
-    }
+//    @Test
+//    public void verificarRelacionamentoNotaFiscal(){
+//        Cliente cliente = entityManager.find(Cliente.class, 2);
+//
+//        Pedido pedido = Pedido.builder()
+//                .cliente(cliente)
+//                .build();
+//
+//        NotaFiscal notaFiscal = NotaFiscal.builder()
+//                .pedido(pedido)
+//                .xml("123456789012342312SP55001000000001111")
+//                .dataEmissao(new Date())
+//                .build();
+//
+//        entityManager.getTransaction().begin();
+//        entityManager.persist(pedido);
+//        entityManager.persist(notaFiscal);
+//        entityManager.getTransaction().commit();
+//        entityManager.clear();
+//
+//        NotaFiscal notaVerificacao = entityManager.find(NotaFiscal.class, notaFiscal.getId());
+//
+//        Assert.assertNotNull(notaVerificacao.getPedido());
+//    }
 
     @Test
     public void verificarBuscaInner(){

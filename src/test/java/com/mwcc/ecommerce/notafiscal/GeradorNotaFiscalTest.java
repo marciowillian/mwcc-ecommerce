@@ -7,11 +7,14 @@ import com.mwcc.ecommerce.model.Pedido;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class GeradorNotaFiscalTest extends EntityManagerTest {
@@ -64,6 +67,7 @@ public class GeradorNotaFiscalTest extends EntityManagerTest {
 
         NotaFiscal notaFiscal = NotaFiscal.builder()
                 .pedido(pedido2)
+                .xml(carregarNotaFiscal())
                 .dataEmissao(new Date())
                 .build();
 
@@ -75,9 +79,41 @@ public class GeradorNotaFiscalTest extends EntityManagerTest {
         entityManager.clear();
 
         NotaFiscal notaFiscalVerificacao = entityManager.find(NotaFiscal.class, notaFiscal.getId());
-
         Assert.assertNotNull(notaFiscalVerificacao);
+        /**
+         * Trecho que salva arquivo no home do S.O.
+
+        try {
+            OutputStream out = new FileOutputStream(
+                    Files.createFile(Paths.get(
+                            System.getProperty("user.home") + "/xml-teste.xml")).toFile());
+            out.write((notaFiscalVerificacao.getXml()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+         */
     }
+
+    @Test
+    public void testandoNota(){
+
+        byte[] nota = carregarNotaFiscal();
+
+        Assert.assertNotNull(nota);
+
+    }
+
+    private static byte[] carregarNotaFiscal(){
+        try {
+            return GeradorNotaFiscalTest.class.getResourceAsStream(
+                    "/nota-fiscal.xml"
+            ).readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 }
 
