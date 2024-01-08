@@ -38,6 +38,9 @@ public class Produto {
     @OneToOne(mappedBy = "produto")
     private Estoque estoque;
 
+    @Lob
+    private byte[] foto;
+
     @ElementCollection
     @CollectionTable(name = "produto_tag",
             joinColumns = @JoinColumn(name = "produto_id"))
