@@ -5,26 +5,15 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
-@ToString
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+//@ToString
+//@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "pagamento_cartao")
-public class PagamentoCartao {
+@DiscriminatorValue("cartao")
+public class PagamentoCartao extends Pagamento {
 
-    @Id @EqualsAndHashCode.Include
-    @Column(name = "pedido_id")
-    private Integer id;
-
-    @MapsId
-    @OneToOne(optional = false)
-    @JoinColumn(name = "pedido_id")
-    private Pedido pedido;
-
-    @Enumerated(EnumType.STRING)
-    private StatusPagamento status;
-
-    private String numero;
+    @Column(name = "numero_cartao")
+    private String numeroCartao;
 }

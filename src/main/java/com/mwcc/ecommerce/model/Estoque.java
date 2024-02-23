@@ -9,12 +9,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "estoque")
-public class Estoque {
-
-    @Id @EqualsAndHashCode.Include
-    private Integer id;
+public class Estoque extends EntidadeBaseInteger{
 
     @OneToOne(optional = false)
     @JoinColumn(name = "produto_id")

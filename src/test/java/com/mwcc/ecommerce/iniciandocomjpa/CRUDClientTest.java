@@ -40,6 +40,7 @@ public class CRUDClientTest extends EntityManagerTest {
         Cliente clienteVerificacao = entityManager.find(Cliente.class, cliente.getId());
         Assert.assertEquals(cliente.getSexo(), clienteVerificacao.getSexo());
         Assert.assertNotNull(cliente.getSexo());
+        Assert.assertNotNull(cliente.getId());
     }
 
     @Test

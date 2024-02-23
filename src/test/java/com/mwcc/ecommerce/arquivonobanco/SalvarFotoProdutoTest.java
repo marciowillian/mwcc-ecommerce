@@ -33,7 +33,9 @@ public class SalvarFotoProdutoTest extends EntityManagerTest {
 
         Produto produtoVerificacao = entityManager.find(Produto.class, produto.getId());
         Assert.assertNotNull(produtoVerificacao.getFoto());
-
+        /*
+        *   Trecho que salva a foto do banco no diretorio home
+        *
         try {
             OutputStream out = new FileOutputStream(
                     Files.createFile(Paths.get(
@@ -42,6 +44,7 @@ public class SalvarFotoProdutoTest extends EntityManagerTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+         */
 
     }
 

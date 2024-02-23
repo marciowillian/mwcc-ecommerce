@@ -11,13 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "categoria")
-public class Categoria {
-
-    @Id @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Categoria extends EntidadeBaseInteger{
 
     private String nome;
     @ManyToOne

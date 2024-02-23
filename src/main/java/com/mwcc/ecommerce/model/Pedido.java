@@ -15,13 +15,8 @@ import java.util.List;
 @Entity
 @ToString
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "pedido")
-public class Pedido {
-
-    @Id @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Pedido extends EntidadeBaseInteger {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "cliente_id")
@@ -46,7 +41,7 @@ public class Pedido {
     private StatusPedido status;
 
     @OneToOne(mappedBy = "pedido")
-    private PagamentoCartao pagamento;
+    private Pagamento pagamento;
 
     @OneToOne(mappedBy = "pedido")
     private NotaFiscal notaFiscal;

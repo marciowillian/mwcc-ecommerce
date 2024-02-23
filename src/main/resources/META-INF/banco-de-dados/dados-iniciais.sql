@@ -15,5 +15,12 @@ insert into mwcc_ecommerce.cliente (id, nome) values(3, 'Antonio José');
 -- Pedido 3
 --INSERT INTO pedido (cliente_id, data_pedido, data_conclusao, nota_fiscal, status, total, enderecoEntrega_rua, enderecoEntrega_numero, enderecoEntrega_cidade, enderecoEntrega_estado, enderecoEntrega_cep) VALUES (4, '2023-03-01 09:45:00', '2023-03-02 11:15:00', 12347, 'PENDENTE', 75.30, 'Rua C', 789, 'Cidade C', 'Estado C', '34567-8901');
 
+insert into pedido (id, cliente_id, data_criacao, total, status) values (4, 2, sysdate(), 998.0, 'AGUARDANDO');
+insert into pedido (id, cliente_id, data_criacao, total, status) values (5, 3, sysdate(), 499.0, 'AGUARDANDO');
+
+insert into item_pedido (pedido_id, produto_id, preco_produto, quantidade) values (4, 1, 499, 2);
+insert into item_pedido (pedido_id, produto_id, preco_produto, quantidade) values (5, 1, 499, 1);
+
+insert into pagamento (pagamento_tipo ,pedido_id, status, numero_cartao) values ('cartao' ,5, 'PROCESSANDO', '123');
 
 insert into categoria(id, nome) values (1, 'Eletrônicos');

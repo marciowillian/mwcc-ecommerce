@@ -3,6 +3,7 @@ package com.mwcc.ecommerce.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +13,9 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "cliente")
-public class Cliente {
+@SecondaryTable(name = "cliente_detalhe", pkJoinColumns = @PrimaryKeyJoinColumn(name = "cliente_id"))
+public class Cliente extends EntidadeBaseInteger{
 
     @Id @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +33,12 @@ public class Cliente {
     @Transient
     private String primeiroNome;
 
+    @Column(table = "cliente_detalhe")
     @Enumerated(EnumType.STRING)
     private SexoCliente sexo;
+
+    @Column(name = "data_nascimento",table = "cliente_detalhe")
+    private LocalDate dataNascimento;
 
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos;
