@@ -21,6 +21,9 @@ insert into pedido (id, cliente_id, data_criacao, total, status) values (5, 3, s
 insert into item_pedido (pedido_id, produto_id, preco_produto, quantidade) values (4, 1, 499, 2);
 insert into item_pedido (pedido_id, produto_id, preco_produto, quantidade) values (5, 1, 499, 1);
 
-insert into pagamento (pagamento_tipo ,pedido_id, status, numero_cartao) values ('cartao' ,5, 'PROCESSANDO', '123');
+--insert into pagamento_cartao (pedido_id, status, numero_cartao) values (5, 'PROCESSANDO', '123');
+
+insert into pagamento (pagamento_tipo ,pedido_id, status, numero_cartao) values ('cartao' ,5, 'PROCESSANDO', '');
+
 
 insert into categoria(id, nome) values (1, 'Eletrônicos');
