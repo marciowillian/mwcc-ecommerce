@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
@@ -25,6 +26,7 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
         Cliente cliente = Cliente.builder()
                 .nome("Marcio Willian")
                 .sexo(SexoCliente.MASCULINO)
+                .cpf("99004593004")
                 .build();
 
         entityManager.getTransaction().begin();
@@ -54,8 +56,12 @@ public class MapeamentoObjetoEmbutidoTest extends EntityManagerTest {
 
     @Test
     public void deveExcluirPedido(){
+        ItemPedido item1 = entityManager.find(ItemPedido.class, new ItemPedidoId(4, 1));
+
         Pedido pedido = Pedido.builder()
                 .cliente(entityManager.find(Cliente.class, 2))
+                .dataCriacao(LocalDateTime.now())
+                .itensPedido(Arrays.asList(item1))
                 .status(StatusPedido.PAGO)
                 .build();
 

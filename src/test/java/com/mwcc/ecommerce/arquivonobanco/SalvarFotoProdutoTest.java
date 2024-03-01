@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 public class SalvarFotoProdutoTest extends EntityManagerTest {
 
@@ -22,6 +23,7 @@ public class SalvarFotoProdutoTest extends EntityManagerTest {
                 .descricao("Cubo mágico colorido")
                 .preco(BigDecimal.valueOf(39.90))
                 .foto(carregarFoto())
+                .dataCriacao(LocalDateTime.now())
                 .build();
 
         entityManager.getTransaction().begin();

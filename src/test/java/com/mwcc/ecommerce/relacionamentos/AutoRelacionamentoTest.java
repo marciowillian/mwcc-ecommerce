@@ -10,9 +10,7 @@ public class AutoRelacionamentoTest extends EntityManagerTest {
     @Test
     public void deveTestarAutoRelacionamentoCategoria(){
 
-        Categoria categoriaPai = Categoria.builder()
-                .nome("Eletrônicos")
-                .build();
+        Categoria categoriaPai = entityManager.find(Categoria.class, 1);
 
         Categoria categoria = Categoria.builder()
                 .nome("Celulares")
@@ -20,7 +18,6 @@ public class AutoRelacionamentoTest extends EntityManagerTest {
                 .build();
 
         entityManager.getTransaction().begin();
-        entityManager.persist(categoriaPai);
         entityManager.persist(categoria);
         entityManager.getTransaction().commit();
 

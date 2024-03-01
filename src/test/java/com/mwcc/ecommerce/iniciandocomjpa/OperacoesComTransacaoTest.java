@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class OperacoesComTransacaoTest extends EntityManagerTest {
 
@@ -74,10 +75,12 @@ public class OperacoesComTransacaoTest extends EntityManagerTest {
 
     @Test
     public void inserirOPrimeiroObjeto(){
-        Produto produto = new Produto();
-        produto.setNome("Câmero Canon");
-        produto.setDescricao("A melhor definição para suas fotos");
-        produto.setPreco(new BigDecimal(5000));
+        Produto produto = Produto.builder()
+                .nome("Câmero Canon")
+                .descricao("A melhor definição para suas fotos")
+                .preco(new BigDecimal(5000))
+                .dataCriacao(LocalDateTime.now())
+                .build();
 
         entityManager.getTransaction().begin();
         entityManager.persist(produto);

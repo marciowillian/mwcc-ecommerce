@@ -1,9 +1,7 @@
 package com.mwcc.ecommerce.notafiscal;
 
 import com.mwcc.ecommerce.EntityManagerTest;
-import com.mwcc.ecommerce.model.Cliente;
-import com.mwcc.ecommerce.model.NotaFiscal;
-import com.mwcc.ecommerce.model.Pedido;
+import com.mwcc.ecommerce.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +13,8 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 
 public class GeradorNotaFiscalTest extends EntityManagerTest {
@@ -57,12 +57,21 @@ public class GeradorNotaFiscalTest extends EntityManagerTest {
 
     @Test
     public void deveSalvarNotaFiscal(){
+        ItemPedido item1 = entityManager.find(ItemPedido.class, new ItemPedidoId(4, 1));
+        ItemPedido item2 = entityManager.find(ItemPedido.class, new ItemPedidoId(5, 1));
+
         Pedido pedido = Pedido.builder()
                 .cliente(entityManager.find(Cliente.class, 2))
+                .dataCriacao(LocalDateTime.now())
+                .itensPedido(Arrays.asList(item1))
+                .status(StatusPedido.AGUARDANDO)
                 .build();
 
         Pedido pedido2 = Pedido.builder()
                 .cliente(entityManager.find(Cliente.class, 2))
+                .dataCriacao(LocalDateTime.now())
+                .itensPedido(Arrays.asList(item2))
+                .status(StatusPedido.AGUARDANDO)
                 .build();
 
         NotaFiscal notaFiscal = NotaFiscal.builder()

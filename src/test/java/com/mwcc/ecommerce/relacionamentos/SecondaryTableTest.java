@@ -15,6 +15,7 @@ public class SecondaryTableTest extends EntityManagerTest {
 
         Cliente cliente = Cliente.builder()
                 .nome("Antonio Carlos de Abreu")
+                .cpf("90874177057")
                 .sexo(SexoCliente.MASCULINO)
                 .dataNascimento(LocalDate.of(1995, 01, 19))
                 .build();

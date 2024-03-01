@@ -14,6 +14,7 @@ public class CRUDClientTest extends EntityManagerTest {
         Cliente cliente = Cliente.builder()
                 .nome("Antonieta da Silva")
                 .sexo(SexoCliente.FEMININO)
+                .cpf("35438024022")
                 .build();
 
         entityManager.getTransaction().begin();
@@ -29,6 +30,7 @@ public class CRUDClientTest extends EntityManagerTest {
     public void deveCadastrarClienteComSexoPreenchido(){
         Cliente cliente = Cliente.builder()
                 .nome("Joao Pedro da Silva")
+                .cpf("35438024027")
                 .sexo(SexoCliente.MASCULINO)
                 .build();
 
@@ -67,13 +69,13 @@ public class CRUDClientTest extends EntityManagerTest {
 
     @Test
     public void removerCliente(){
-        Cliente cliente = entityManager.find(Cliente.class, 3);
+        Cliente cliente = entityManager.find(Cliente.class, 4);
 
         entityManager.getTransaction().begin();
         entityManager.remove(cliente);
         entityManager.getTransaction().commit();
 
-        Cliente clienteVerificacao = entityManager.find(Cliente.class, 3);
+        Cliente clienteVerificacao = entityManager.find(Cliente.class, cliente.getId());
         Assert.assertNull(clienteVerificacao);
     }
 

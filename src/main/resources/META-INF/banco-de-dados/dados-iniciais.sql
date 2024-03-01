@@ -1,8 +1,14 @@
-insert into Produto (id, nome, preco, descricao) values (1,'Kindle', 499.0, 'Conheça o novo Kindle, agora com iluminação embutida ajustável, que permite que você leia em ambientes abertos ou fechados, a qualquer hora do dia.');
-insert into Produto (id, nome, preco, descricao) values (3,'Câmera Canon v2', 5000.0, 'A melhor definição para suas fotos');
+insert into Produto (id, nome, data_criacao, preco, descricao) values (1,'Kindle', '2024-01-01' ,499.0, 'Conheça o novo Kindle, agora com iluminação embutida ajustável, que permite que você leia em ambientes abertos ou fechados, a qualquer hora do dia.');
+insert into Produto (id, nome, data_criacao, preco, descricao) values (3,'Câmera Canon v2', '2024-01-01',5000.0, 'A melhor definição para suas fotos');
 
-insert into mwcc_ecommerce.cliente (id, nome) values(2, 'Nitia Cristina');
-insert into mwcc_ecommerce.cliente (id, nome) values(3, 'Antonio José');
+
+insert into mwcc_ecommerce.cliente (id, nome, cpf) values(2, 'Nitia Cristina', '12345678910');
+insert into mwcc_ecommerce.cliente (id, nome, cpf) values(3, 'Antonio José', '12345678911');
+insert into mwcc_ecommerce.cliente (id, nome, cpf) values(4, 'Marcos Antonio', '12345678912');
+
+insert into mwcc_ecommerce.cliente_detalhe (data_nascimento, sexo, cliente_id) values('1997-04-22', 'FEMININO', 2);
+insert into mwcc_ecommerce.cliente_detalhe (data_nascimento, sexo, cliente_id) values('1997-04-19', 'MASCULINO', 3);
+insert into mwcc_ecommerce.cliente_detalhe (data_nascimento, sexo, cliente_id) values('1993-05-26', 'MASCULINO', 4);
 
 -- Pedido 1
 --insert into mwcc_ecommerce.pedido(id, data_pedido, bairro, cep, cidade, complemento, estado, logradouro, numero, status, total) values(2, '2023-07-03 19:54:27.274131', 'Cohab', '65000000', 'São Luis', 'ao lado da ABBEM', 'MA', 'Rua Sampaio Correa', '256A', 'PAGO', 5000.00);
@@ -17,13 +23,17 @@ insert into mwcc_ecommerce.cliente (id, nome) values(3, 'Antonio José');
 
 insert into pedido (id, cliente_id, data_criacao, total, status) values (4, 2, sysdate(), 998.0, 'AGUARDANDO');
 insert into pedido (id, cliente_id, data_criacao, total, status) values (5, 3, sysdate(), 499.0, 'AGUARDANDO');
+insert into pedido (id, cliente_id, data_criacao, total, status) values (6, 3, sysdate(), 499.0, 'AGUARDANDO');
+insert into pedido (id, cliente_id, data_criacao, total, status) values (7, 3, sysdate(), 499.0, 'AGUARDANDO');
+insert into pedido (id, cliente_id, data_criacao, total, status) values (8, 3, sysdate(), 499.0, 'AGUARDANDO');
+
 
 insert into item_pedido (pedido_id, produto_id, preco_produto, quantidade) values (4, 1, 499, 2);
 insert into item_pedido (pedido_id, produto_id, preco_produto, quantidade) values (5, 1, 499, 1);
 
 --insert into pagamento_cartao (pedido_id, status, numero_cartao) values (5, 'PROCESSANDO', '123');
 
-insert into pagamento (pagamento_tipo ,pedido_id, status, numero_cartao) values ('cartao' ,5, 'PROCESSANDO', '');
+insert into pagamento (pagamento_tipo ,pedido_id, status, numero_cartao) values ('cartao' ,5, 'PROCESSANDO', '123456');
 
 
 insert into categoria(id, nome) values (1, 'Eletrônicos');

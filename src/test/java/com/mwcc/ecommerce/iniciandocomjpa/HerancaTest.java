@@ -24,7 +24,6 @@ public class HerancaTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         entityManager.persist(pagamentoCartao);
         entityManager.getTransaction().commit();
-
         entityManager.clear();
 
         Pedido pedidoVerificacao = entityManager.find(Pedido.class, pedido.getId());

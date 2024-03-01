@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class RelacionamentoManyToOneTest extends EntityManagerTest {
 
@@ -35,32 +36,13 @@ public class RelacionamentoManyToOneTest extends EntityManagerTest {
     }
 
     @Test
-    public void VerificarRelacionemtoItemPedidoEPedido(){
-        Cliente cliente = entityManager.find(Cliente.class, 2);
+    public void verificarRelacionemtoItemPedidoEPedido(){
+        ItemPedido itemPedido = entityManager.find(ItemPedido.class, new ItemPedidoId(5, 1));
+        Pedido pedido = entityManager.find(Pedido.class, 5);
 
-        Pedido pedido = Pedido.builder()
-                .cliente(cliente)
-                .build();
-
-        Produto produto = entityManager.find(Produto.class, 1);
-
-        ItemPedido itemPedido = ItemPedido.builder()
-                    .id(new ItemPedidoId())
-                    .pedido(pedido)
-                    .produto(produto)
-                    .precoProduto(BigDecimal.valueOf(19.98))
-                    .quantidade(2)
-                .build();
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
-        entityManager.persist(itemPedido);
-        entityManager.getTransaction().commit();
-        entityManager.clear();
-
-//        ItemPedido itemPedidoVirificacao = entityManager.find(ItemPedido.class, itemPedido.getId());
-//        Assert.assertNotNull(itemPedidoVirificacao.getPedido());
-//        Assert.assertNotNull(itemPedidoVirificacao.getProduto());
+        Assert.assertNotNull(pedido.getItensPedido());
+        Assert.assertNotNull(itemPedido.getPedido());
+        Assert.assertEquals(pedido.getTotal(), itemPedido.getPrecoProduto());
     }
 
 }

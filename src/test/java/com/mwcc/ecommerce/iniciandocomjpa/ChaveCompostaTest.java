@@ -5,15 +5,16 @@ import com.mwcc.ecommerce.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 public class ChaveCompostaTest extends EntityManagerTest {
 
     @Test
     public void salvarItemPedido(){
         Cliente cliente = entityManager.find(Cliente.class, 2);
         Produto produto = entityManager.find(Produto.class, 1);
-        Pedido pedido = Pedido.builder()
-                .cliente(cliente)
-                .build();
+        Pedido pedido = entityManager.find(Pedido.class, 6);
 
         ItemPedido itemPedido = ItemPedido.builder()
 //                .pedidoId(pedido.getId()) IdClass
@@ -21,10 +22,11 @@ public class ChaveCompostaTest extends EntityManagerTest {
                 .id(new ItemPedidoId())
                 .pedido(pedido)
                 .produto(produto)
+                .precoProduto(produto.getPreco())
+                .quantidade(4)
                 .build();
 
         entityManager.getTransaction().begin();
-        entityManager.persist(pedido);
         entityManager.persist(itemPedido);
         entityManager.getTransaction().commit();
         entityManager.clear();
